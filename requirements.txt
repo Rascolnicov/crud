@@ -1,0 +1,4 @@
+django==3.2.19
+django-environ==0.10.0
+django-bootstrap5==23.1
+django-widget-tweaks==1.4.12

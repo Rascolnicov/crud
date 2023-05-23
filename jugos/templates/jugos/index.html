@@ -1,0 +1,57 @@
+{% extends "jugos/base.html" %}
+
+
+
+{% block content %}
+<table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th width="35%">Nombre</th>
+        <th>Precio</th>
+        <th>Stock</th>
+        <th>Imagen</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+
+    <tbody>
+        <!-- Recorremos los objetos o registros que tenemos en nuestra tabla 'jugos' y los listamos -->
+        {% for jugo in object_list %}
+        <tr>
+            <td>{{ jugo.nombre }}</td>
+            <td>{{ jugo.precio }}</td>
+            <td>{{ jugo.stock }}</td>
+            <td><img src="{% static 'uploads/'%}{{jugo.img}}" alt="{{jugo.nombre}}" class="img-fluid" width="7%"></td>
+
+            <td>
+                <!-- Usaremos un formulario que realizará la tarea de eliminar un registro o jugo desde la misma tabla HTML -->                        
+                <form method="POST" action="eliminar/{{jugo.id}}">
+                    {% csrf_token %}
+                    <div class="btn-group">
+        
+                    <!-- Creamos 3 botones que son ver, Editar y Eliminar, nos sirven para gestionar nuestros registros o jugos -->
+                    <a href="detalle/{{jugo.id}}" title="Ver" type="button" class="btn btn-success">Ver </a>
+                    <a href="editar/{{jugo.id}}" title="Editar" type="button" class="btn btn-primary">Editar </a>
+
+                    <!-- Este botón ejecuta el formulario para eliminar un registro o jugo en la Base de datos -->
+                    <button class="btn btn-danger" onclick="return eliminar();" type="submit">
+                        Eliminar
+                    </button>
+                    </div>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    function eliminar() {
+        var x = confirm("Eliminar Producto ?");
+        if (x)
+            return true;
+        else
+            return false;
+    }
+ </script>
+{% endblock %}
